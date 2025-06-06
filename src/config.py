@@ -2,6 +2,8 @@ config = {
 
     'RANDOM_SEED': 0,
 
+    'EPOCHS': 10,
+
     'dataset': {
         'TEST_SPLIT': 0.25,
 
