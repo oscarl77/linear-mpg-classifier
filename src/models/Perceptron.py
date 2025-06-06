@@ -5,6 +5,19 @@ class Perceptron:
     def __init__(self, epochs):
         self.epochs = epochs
 
+    def test(self, X, y, theta, theta_0):
+        (d, n) = X.shape
+        X, y = X.values, y.values
+        correct = 0
+        for i in range(n):
+            x_i = X[i]
+            y_i = y[i]
+            prediction = self.linear_classify(x_i, theta, theta_0)
+            if prediction == y_i:
+                correct += 1
+        test_accuracy = (correct / n) * 100
+        print(f"Test Accuracy: {test_accuracy:.2f}%")
+
     def train(self, X, y):
         (d, n) = X.shape
         X, y = X.values, y.values
