@@ -35,10 +35,11 @@ def _preprocess_data(df):
 
 def _split_data(df):
     """Split dataset into testing and training sets"""
+    SEED = config['RANDOM_SEED']
     TEST_SPLIT = config['dataset']['TEST_SPLIT']
     y = df['mpg']
     X_raw = df.drop(columns=['mpg'])
-    X_train_raw, X_test_raw, y_train, y_test = train_test_split(X_raw, y, test_size=TEST_SPLIT)
+    X_train_raw, X_test_raw, y_train, y_test = train_test_split(X_raw, y, test_size=TEST_SPLIT, random_state=SEED)
     return X_train_raw, X_test_raw, y_train, y_test
 
 def _normalize_data(raw_train, raw_test):
