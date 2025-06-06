@@ -6,14 +6,17 @@ from src.utils.config_loader import load_config
 _cached_dataset = None
 
 def get_training_set():
+    """Return the training dataset and labels"""
     X_train, _, y_train, _, = _load_full_data()
     return X_train, y_train
 
 def get_test_set():
+    """Return the test dataset and labels"""
     _, X_test, _, y_test, = _load_full_data()
     return X_test, y_test
 
 def _load_full_data():
+    """Loads the full dataset and caches it to avoid repeated loading"""
     global _cached_dataset
     if _cached_dataset is None:
         df = pd.read_csv('../data/auto-mpg.tsv', sep='\t')
@@ -45,25 +48,13 @@ def _split_data(df):
 
 def _normalize_data(raw_train, raw_test):
     """Normalize data using z-standardization"""
-    # Separate discrete and continuous features as only continuous-valued
-    # columns can be standardized.
-    discrete_train = raw_train['origin']
-    continuous_train = raw_train.drop(columns=['origin'])
+    mean = raw_train.mean()
+    std = raw_train.std()
 
-    discrete_test = raw_test['origin']
-    continuous_test = raw_test.drop(columns=['origin'])
+    normalized_train = (raw_train - mean) / std
+    normalized_test = (raw_test - mean) / std
 
-    mean = continuous_train.mean()
-    std = continuous_train.std()
-
-    normalized_train = (continuous_train - mean) / std
-    normalized_test = (continuous_test - mean) / std
-
-    # Add the discrete-valued columns back to the normalized dataset
-    X_train = pd.concat([normalized_train, discrete_train], axis=1)
-    X_test = pd.concat([normalized_test, discrete_test], axis=1)
-
-    return X_train, X_test
+    return normalized_train, normalized_test
 
 def _select_features(df):
     """
@@ -78,8 +69,3 @@ def _select_features(df):
             continue
         if keep == "False":
             df.drop(feature, axis=1, inplace=True)
-
-
-def _add_car_make_feature(df):
-    """Add a column in the data for make of the car"""
-    df['car_make'] = df['car_name'].str.split().str[0].str.lower()
