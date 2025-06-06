@@ -10,7 +10,6 @@ class Perceptron:
         X, y = X.values, y.values
         theta = np.zeros(n)
         theta_0 = 0
-        correct = 0
 
         for epoch in range(1, self.epochs):
             correct = 0
@@ -25,7 +24,7 @@ class Perceptron:
                     correct += 1
 
             avg_accuracy = (correct / n) * 100
-            print(f"Epoch {epoch + 1}/{self.epochs}, Running Accuracy: {avg_accuracy:.2f}")
+            print(f"Epoch {epoch}, Accuracy: {avg_accuracy:.2f}%")
         return theta, theta_0
 
     @staticmethod
