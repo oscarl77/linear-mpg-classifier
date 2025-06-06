@@ -1,0 +1,32 @@
+{
+    "EXPERIMENT_NAME": "model.v1",
+    "RANDOM_SEED": 0,
+    "EPOCHS": 10,
+    "DATA": {
+        "TEST_SPLIT": 0.25,
+        "FEATURES": {
+            "cylinders": "True",
+            "displacement": "True",
+            "horsepower": "True",
+            "weight": "True",
+            "acceleration": "True",
+            "model_year": "True",
+            "origin": "True",
+            "car_name": "False"
+        }
+    },
+    "SAVED_MODELS": {
+        "model.v1": [
+            [
+                -2.358072944658231,
+                -0.4903565824864713,
+                -3.037920280205688,
+                -2.3202518196838784,
+                1.6005449004199823,
+                1.6028817811909368,
+                2.0
+            ],
+            0
+        ]
+    }
+}

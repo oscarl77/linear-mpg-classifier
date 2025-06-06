@@ -1,7 +1,7 @@
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-from src.config import config
+from src.utils.config_loader import load_config
 
 _cached_dataset = None
 
@@ -35,10 +35,12 @@ def _preprocess_data(df):
 
 def _split_data(df):
     """Split dataset into testing and training sets"""
-    TEST_SPLIT = config['dataset']['TEST_SPLIT']
+    config = load_config()
+    SEED = config["RANDOM_SEED"]
+    TEST_SPLIT = config["DATA"]["TEST_SPLIT"]
     y = df['mpg']
     X_raw = df.drop(columns=['mpg'])
-    X_train_raw, X_test_raw, y_train, y_test = train_test_split(X_raw, y, test_size=TEST_SPLIT)
+    X_train_raw, X_test_raw, y_train, y_test = train_test_split(X_raw, y, test_size=TEST_SPLIT, random_state=SEED)
     return X_train_raw, X_test_raw, y_train, y_test
 
 def _normalize_data(raw_train, raw_test):
@@ -68,12 +70,13 @@ def _select_features(df):
     Select which features will be used to train and test the model
     :param df: DataFrame containing car mpg data
     """
-    features = config['dataset']['FEATURES']
+    config = load_config()
+    features = config["DATA"]["FEATURES"]
     for feature in features:
         keep = features[feature]
         if feature == 'mpg':
             continue
-        if not keep:
+        if keep == "False":
             df.drop(feature, axis=1, inplace=True)
 
 
