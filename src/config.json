@@ -10,7 +10,8 @@
             "horsepower": "True",
             "weight": "True",
             "acceleration": "True",
-            "model_year": "True"
+            "model_year": "True",
+            "car_name": "False"
         }
     },
     "SAVED_MODELS": {
