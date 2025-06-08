@@ -1,7 +1,7 @@
 {
     "EXPERIMENT_NAME": "model.vTEST",
     "RANDOM_SEED": 4,
-    "EPOCHS": 10,
+    "EPOCHS": 80,
     "DATA": {
         "TEST_SPLIT": 0.25,
         "FEATURES": {

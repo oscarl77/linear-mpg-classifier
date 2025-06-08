@@ -20,7 +20,7 @@ def train_perceptron(X, y, experiment_name):
 
 def train_svm(X, y, experiment_name):
     svm = SupportVectorMachine()
-    svm.train(X, y, lam=0, learning_rate=0.1, epochs=2)
+    svm.train(X, y, lam=0)
 
 if __name__ == "__main__":
     train()
