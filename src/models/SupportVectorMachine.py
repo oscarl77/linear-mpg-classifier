@@ -7,15 +7,17 @@ class SupportVectorMachine:
 
     @staticmethod
     def test(X, y, theta, theta_0):
-        X, y = X.to_numpy(), y.to_numpy()
+        if not isinstance(X, np.ndarray):
+            X = X.to_numpy()
+        y = y.to_numpy()
         X = X.T
 
         margin = (theta.T @ X) + theta_0
         predictions = np.sign(margin)
 
         accuracy = np.mean(predictions == y) * 100
-        print(f"Test Accuracy: {accuracy:.2f}%")
-        return predictions
+        #print(f"Test Accuracy: {accuracy:.2f}%")
+        return accuracy
 
     def train(self, X, y, lam, learning_rate, epochs):
         if not isinstance(X, np.ndarray):
@@ -57,7 +59,6 @@ class SupportVectorMachine:
         :param lam: regularization term.
         :return: mean hinge loss + L2 regularization term.
         """
-        print(f"Labels shape: {y.shape}, theta shape: {(theta).shape}")
         margin = y * (theta.T @ X) + theta_0
         hinge_loss = self.hinge(margin)
         regularization_term = lam * np.linalg.norm(theta)**2
@@ -118,7 +119,7 @@ class SupportVectorMachine:
             evals.append(eval_fn(X, y, theta, theta_0))
 
             if abs(fs[-2] - fs[-1]) < tol:
-                print(f"Converged at epoch {i}")
+                #print(f"Converged at epoch {i}")
                 break
 
         return x, fs, evals
