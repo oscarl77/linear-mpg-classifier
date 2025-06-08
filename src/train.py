@@ -25,9 +25,9 @@ def train_svm(X, y, config, experiment_name):
     learning_rate = config["LEARNING_RATE"]
     svm = SupportVectorMachine()
     theta, theta_0, losses, accuracies = svm.train(X, y, regularization, learning_rate, epochs)
-    plot_loss_and_accuracy(losses, accuracies)
-    experiment_details = {experiment_name: (theta.tolist(), theta_0.tolist())}
-    update_config("SAVED_SVM_PARAMS", experiment_details)
+    #plot_loss_and_accuracy(losses, accuracies)
+    params = (theta.tolist(), theta_0.tolist())
+    update_config(experiment_name, params)
 
 if __name__ == "__main__":
     train()
