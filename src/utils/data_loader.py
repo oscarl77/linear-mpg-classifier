@@ -7,15 +7,15 @@ _cached_dataset = None
 
 def get_training_set():
     """Return the training dataset and labels"""
-    X_train, _, y_train, _, = _load_full_data()
+    X_train, _, y_train, _, = load_full_data()
     return X_train, y_train
 
 def get_test_set():
     """Return the test dataset and labels"""
-    _, X_test, _, y_test, = _load_full_data()
+    _, X_test, _, y_test, = load_full_data()
     return X_test, y_test
 
-def _load_full_data():
+def load_full_data():
     """Loads the full dataset and caches it to avoid repeated loading"""
     global _cached_dataset
     if _cached_dataset is None:
@@ -24,15 +24,20 @@ def _load_full_data():
         _cached_dataset = X_train, X_test, y_train, y_test
     return _cached_dataset
 
-def _preprocess_data(df):
+def load_unscaled_data():
+    df = pd.read_csv('../data/auto-mpg.tsv', sep='\t')
+    return _preprocess_data(df, scaled=False)
+
+def _preprocess_data(df, scaled=True):
     """
     Drops emtpy rows and unwanted features, along with splitting data into
     training and test sets.
     """
     df = df.dropna()
     _select_features(df)
-    X_train_raw, X_test_raw, y_train, y_test = _split_data(df)
-    X_train, X_test = _normalize_data(X_train_raw, X_test_raw)
+    X_train, X_test, y_train, y_test = _split_data(df)
+    if scaled:
+        X_train, X_test = _normalize_data(X_train, X_test)
 
     return X_train, X_test, y_train, y_test
 
